@@ -2,7 +2,6 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  BeforeInsert,
   BeforeUpdate,
   DeleteDateColumn,
   BeforeRemove,
@@ -32,11 +31,7 @@ export abstract class Base {
   })
   deletedAt?: Date;
 
-  @BeforeInsert()
-  beforeCreate() {
-    this.createdAt = new Date();
-    this.updatedAt = this.createdAt;
-  }
+  abstract beforeCreate(): void;
 
   @BeforeUpdate()
   beforeUpdate() {

@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ToDoController } from './to-do-ist.controller';
+import { ToDoController } from './to-do-list.controller';
 import { ToDoService } from './to-do-list.service';
 
 describe('ToDoController', () => {

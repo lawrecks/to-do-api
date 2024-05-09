@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ToDoService } from './to-do-list.service';
-import { ToDoController } from './to-do-ist.controller';
+import { ToDoController } from './to-do-list.controller';
 
 @Module({
   controllers: [ToDoController],

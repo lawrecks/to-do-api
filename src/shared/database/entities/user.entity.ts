@@ -26,11 +26,11 @@ export class User extends Base {
   }
 
   @BeforeInsert()
-  beforeCreate() {
+  async beforeCreate() {
     this.createdAt = new Date();
     this.updatedAt = this.createdAt;
     if (this.hashPassword) {
-      this.hashPassword();
+      await this.hashPassword();
     }
   }
 }
