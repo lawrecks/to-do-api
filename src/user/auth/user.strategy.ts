@@ -7,7 +7,7 @@ import { User } from 'src/shared/database/entities/user.entity';
 import { stripKeys } from 'src/shared/helpers';
 
 @Injectable()
-export class StaffStrategy extends PassportStrategy(Strategy, 'staff') {
+export class UserStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(
     private userService: UserService,
     private configService: ConfigService,

@@ -28,7 +28,7 @@ export class UserController {
     return successResponse(
       201,
       'Registration successful',
-      stripKeys(newUser, ['deletedAt']),
+      stripKeys(newUser, ['password', 'deletedAt']),
     );
   }
 

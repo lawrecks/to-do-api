@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateToDoDtoList } from './dto/update-to-do-list.dto';
 import { ToDoList } from 'src/shared/database/entities/to-do-list.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,20 +15,37 @@ export class ToDoListService {
     return this.repository.save(toDoList);
   }
 
-  findAll({ page = 1, limit = 10 }: PaginationOptions) {
+  async findAll({ page = 1, limit = 10 }: PaginationOptions) {
     const skip = (page - 1) * limit;
-    return this.repository.find({ take: limit, skip });
+
+    return this.repository.findAndCount({
+      take: limit,
+      skip,
+      relations: { tasks: true },
+    });
   }
 
-  findOne(id: number) {
-    return this.repository.findOne({ where: { id } });
+  async findOne(id: number) {
+    return this.repository.findOne({
+      where: { id },
+      relations: { tasks: true },
+    });
   }
 
-  update(id: number, dto: UpdateToDoDtoList) {
+  async update(id: number, dto: UpdateToDoDtoList) {
     return this.repository.save({ id, ...dto });
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return this.repository.softDelete(id);
+  }
+
+  async getOne(id: number) {
+    const toDoList = await this.findOne(id);
+    if (!toDoList) {
+      throw new NotFoundException('To-do list not found');
+    }
+
+    return toDoList;
   }
 }
