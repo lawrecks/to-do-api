@@ -1,4 +1,12 @@
+import { IsOptional } from 'class-validator';
+
 export class PaginationOptions {
-  page?: number;
-  limit?: number;
+  @IsOptional()
+  readonly page?: number;
+
+  @IsOptional()
+  readonly limit?: number;
+
+  @IsOptional()
+  readonly search?: string;
 }

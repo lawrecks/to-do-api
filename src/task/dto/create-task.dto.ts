@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsDateString, IsNotEmpty } from 'class-validator';
 
 export class CreateTaskDto {
   @IsNotEmpty({ message: 'Todo List ID is required' })
@@ -7,6 +7,7 @@ export class CreateTaskDto {
   @IsNotEmpty()
   readonly description: string;
 
+  @IsDateString()
   @IsNotEmpty()
   readonly dueDate: Date;
 }

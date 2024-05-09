@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from '../shared/database/entities/task.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { PaginationOptions } from '../shared/pagination-options';
+import { FindOptionsWhere, Raw, Repository } from 'typeorm';
+import { TaskQueryDto } from './dto/task-query.dto';
 
 @Injectable()
 export class TaskService {
@@ -11,20 +11,51 @@ export class TaskService {
     @InjectRepository(Task)
     private readonly repository: Repository<Task>,
   ) {}
+
   async create(data: Task) {
     return this.repository.save(data);
   }
 
-  async findAll(
-    toDoListId: number,
-    { page = 1, limit = 10 }: PaginationOptions,
-  ) {
+  async findAll({
+    page,
+    limit,
+    status,
+    toDoListId,
+    search,
+    dueDate,
+  }: TaskQueryDto) {
     const skip = (page - 1) * limit;
+    let filter: FindOptionsWhere<Task> = { toDoList: { id: toDoListId } };
+    if (status) {
+      filter = { ...filter, status };
+    }
+
+    if (search) {
+      filter = {
+        ...filter,
+        description: Raw((alias) => `${alias} LIKE :search`, {
+          search: `%${search}%`,
+        }),
+      };
+    }
+
+    if (dueDate) {
+      filter = {
+        ...filter,
+        dueDate: Raw((alias) => `${alias} = :date`, {
+          date: new Date(dueDate).toISOString().split('T')[0],
+        }),
+      };
+    }
+
     return this.repository.findAndCount({
-      where: { toDoList: { id: toDoListId } },
+      where: filter,
       take: limit,
       skip,
       relations: { toDoList: true },
+      order: {
+        createdAt: 'DESC',
+      },
     });
   }
 

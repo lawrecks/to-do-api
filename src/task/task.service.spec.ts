@@ -34,7 +34,7 @@ describe('TaskService', () => {
   });
 
   it('should get all todo lists', async () => {
-    const tasks = await service.findAll(1, {});
+    const tasks = await service.findAll({ toDoListId: 1, page: 1, limit: 3 });
 
     expect(tasks).toBeDefined();
     expect(tasks.length).toBeGreaterThan(0);

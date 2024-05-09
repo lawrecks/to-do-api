@@ -15,7 +15,7 @@ export class Task extends Base {
   })
   status: TaskStatusEnum;
 
-  @Column({ name: 'due_date', type: 'timestamp' })
+  @Column({ name: 'due_date', type: 'date' })
   dueDate: Date;
 
   @ManyToOne(() => ToDoList, (list) => list.id, {

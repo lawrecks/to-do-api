@@ -45,11 +45,14 @@ export class ToDoListController {
 
   @Get()
   async findAll(@Query() query: PaginationOptions) {
-    const [data, count] = await this.service.findAll(query);
+    const { page = 1, limit = 10 } = query;
+    const [data, total] = await this.service.findAll({ ...query, page, limit });
 
     return successResponse(HttpStatus.OK, 'To-do lists fetched successfully', {
       toDoLists: stripKeys(data, ['deletedAt']),
-      count,
+      total,
+      page: +page,
+      limit: +limit,
     });
   }
 

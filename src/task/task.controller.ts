@@ -46,13 +46,15 @@ export class TaskController {
 
   @Get()
   async findAll(@Query() query: TaskQueryDto) {
-    const { toDoListId } = query;
+    const { toDoListId, page = 1, limit = 10 } = query;
     await this.toDoListService.getOne(toDoListId);
-    const [data, count] = await this.service.findAll(toDoListId, query);
+    const [data, total] = await this.service.findAll({ ...query, page, limit });
 
     return successResponse(HttpStatus.OK, 'Tasks fetched successfully', {
       tasks: stripKeys(data, ['deletedAt']),
-      count,
+      total,
+      page: +page,
+      limit: +limit,
     });
   }
 

@@ -33,7 +33,7 @@ describe('ToDoListService', () => {
   });
 
   it('should get all todo lists', async () => {
-    const todo = await service.findAll({});
+    const todo = await service.findAll({ page: 1, limit: 3 });
 
     expect(todo).toBeDefined();
     expect(todo.length).toBeGreaterThan(0);
