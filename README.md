@@ -1,73 +1,88 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# orders-service
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+RESTful API for a simple To-Do List application
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Built With
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- NestJS
+- Typescript
+- Git
+- Express
+- Passport
+- JSON Web Token
+- TypeORM
+- Jest
+- Postman
+- MySQL
 
-## Installation
+## Requirements
 
-```bash
-$ npm install
-```
+You will need Node.js (version 20 and above) and a node global package installed in your environment.
 
-## Running the app
+### Node
 
-```bash
-# development
-$ npm run start
+- #### Node installation on Windows
 
-# watch mode
-$ npm run start:dev
+  Just go on [official Node.js website](https://nodejs.org/) and download the installer.
+  Also, be sure to have `git` available in your PATH, `npm` might need it (You can find git [here](https://git-scm.com/)).
 
-# production mode
-$ npm run start:prod
-```
+- #### Node installation on Ubuntu
 
-## Test
+  ##### Installation Commands
 
-```bash
-# unit tests
-$ npm run test
+        $ sudo apt install nodejs
+        $ sudo apt install npm
 
-# e2e tests
-$ npm run test:e2e
+- #### Other Operating Systems
 
-# test coverage
-$ npm run test:cov
-```
+  You can find more information about the installation on the [official Node.js website](https://nodejs.org/) and the [official NPM website](https://npmjs.org/).
+  If the installation was successful, you should be able to run the following command.
 
-## Support
+  ##### Verify versions
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+        $ node -v
+        20.12.2
+        $ npm -v
+        v10.5.0
 
-## Stay in touch
+---
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Clone this project
 
-## License
+    $ git clone https://github.com/lawrecks/to-do-api.git
+    $ cd to-do-api
 
-Nest is [MIT licensed](LICENSE).
+## Configure app
+
+- Create a file named `.env` in the project root directory
+- Add the environment variables as described in the `.env.example` file
+
+## Install dependencies
+
+    $ npm install
+
+### Running this project locally
+
+    $ npm run start:dev
+
+### Running tests
+
+    $ npm test
+
+### Running tests coverage
+
+    $ npm run test:cov
+
+## Documentation
+
+Postman: https://documenter.getpostman.com/view/10148336/2sA3JM5fno
+
+## Show your support
+
+Give a ⭐️ if you like this project!
+
+## Copyright
+
+Copyright (c) 2024 Ugochukwu Ejiogu
