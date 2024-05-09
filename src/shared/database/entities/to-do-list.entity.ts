@@ -1,6 +1,13 @@
 import { Base } from 'src/shared/database/entities/base';
 import { User } from 'src/shared/database/entities/user.entity';
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { Task } from './task.entity';
 
 @Entity('to_do_lists')
@@ -16,4 +23,10 @@ export class ToDoList extends Base {
 
   @OneToMany(() => Task, (task) => task.toDoList)
   tasks: Task[];
+
+  @BeforeInsert()
+  beforeCreate() {
+    this.createdAt = new Date();
+    this.updatedAt = this.createdAt;
+  }
 }

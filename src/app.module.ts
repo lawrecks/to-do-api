@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { ToDoModule } from './to-do-list/to-do-list.module';
 import { DatabaseModule } from './shared/database/database.module';
 import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './user/user.module';
 import databaseConfig from './shared/config/database.config';
 import appConfig from './shared/config/app.config';
 
@@ -14,6 +15,7 @@ import appConfig from './shared/config/app.config';
     }),
     DatabaseModule,
     ToDoModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],

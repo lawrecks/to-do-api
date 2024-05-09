@@ -1,6 +1,6 @@
 import { TaskStatusEnum } from 'src/shared/constants';
 import { Base } from 'src/shared/database/entities/base';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { ToDoList } from './to-do-list.entity';
 
 @Entity({ name: 'tasks' })
@@ -19,4 +19,10 @@ export class Task extends Base {
   })
   @JoinColumn({ name: 'to_do_list_id' })
   toDoList: ToDoList | number;
+
+  @BeforeInsert()
+  beforeCreate() {
+    this.createdAt = new Date();
+    this.updatedAt = this.createdAt;
+  }
 }
