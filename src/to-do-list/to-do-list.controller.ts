@@ -11,15 +11,16 @@ import {
   UseGuards,
   HttpStatus,
 } from '@nestjs/common';
-import { ToDoListService } from './to-do-list.service';
+import { plainToClass } from 'class-transformer';
+import { Request } from 'express';
+
 import { CreateToDoListDto } from './dto/create-to-do-list.dto';
 import { UpdateToDoDtoList } from './dto/update-to-do-list.dto';
-import { plainToClass } from 'class-transformer';
+import { ToDoListService } from './to-do-list.service';
 import { ToDoList } from '../shared/database/entities/to-do-list.entity';
+import { User } from '../shared/database/entities/user.entity';
 import { stripKeys, successResponse } from '../shared/helpers';
 import { PaginationOptions } from '../shared/pagination-options';
-import { Request } from 'express';
-import { User } from '../shared/database/entities/user.entity';
 import { UserAuthGuard } from '../user/auth/user.guard';
 
 @UseGuards(UserAuthGuard)
@@ -45,11 +46,14 @@ export class ToDoListController {
 
   @Get()
   async findAll(@Query() query: PaginationOptions) {
-    const [data, count] = await this.service.findAll(query);
+    const { page = 1, limit = 10 } = query;
+    const [data, total] = await this.service.findAll({ ...query, page, limit });
 
     return successResponse(HttpStatus.OK, 'To-do lists fetched successfully', {
       toDoLists: stripKeys(data, ['deletedAt']),
-      count,
+      total,
+      page: +page,
+      limit: +limit,
     });
   }
 
@@ -69,6 +73,7 @@ export class ToDoListController {
     await this.service.getOne(id);
     await this.service.update(+id, dto);
     const updatedData = await this.service.findOne(id);
+
     return successResponse(
       HttpStatus.OK,
       'To-do list updated successfully',
@@ -80,6 +85,7 @@ export class ToDoListController {
   async remove(@Param('id') id: number) {
     await this.service.getOne(id);
     await this.service.remove(id);
+
     return successResponse(HttpStatus.OK, 'To-do list deleted successfully');
   }
 }

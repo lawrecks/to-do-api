@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { FindManyOptions, Raw, Repository } from 'typeorm';
+
 import { UpdateToDoDtoList } from './dto/update-to-do-list.dto';
 import { ToDoList } from '../shared/database/entities/to-do-list.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { PaginationOptions } from '../shared/pagination-options';
 
 @Injectable()
@@ -15,14 +16,29 @@ export class ToDoListService {
     return this.repository.save(toDoList);
   }
 
-  async findAll({ page = 1, limit = 10 }: PaginationOptions) {
+  async findAll({ page, limit, search }: PaginationOptions) {
     const skip = (page - 1) * limit;
-
-    return this.repository.findAndCount({
+    let options: FindManyOptions<ToDoList> = {
       take: limit,
       skip,
       relations: { tasks: true },
-    });
+      order: {
+        createdAt: 'DESC',
+      },
+    };
+
+    if (search) {
+      options = {
+        ...options,
+        where: {
+          name: Raw((alias) => `${alias} LIKE :search`, {
+            search: `%${search}%`,
+          }),
+        },
+      };
+    }
+
+    return this.repository.findAndCount(options);
   }
 
   async findOne(id: number) {

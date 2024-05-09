@@ -4,11 +4,12 @@ import {
   Body,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { UserService } from './user.service';
-import { RegisterUserDto } from './dto/register-user.dto';
 import { plainToClass } from 'class-transformer';
-import { User } from '../shared/database/entities/user.entity';
+
 import { LoginUserDto } from './dto/login-user.dto';
+import { RegisterUserDto } from './dto/register-user.dto';
+import { UserService } from './user.service';
+import { User } from '../shared/database/entities/user.entity';
 import { stripKeys, successResponse } from '../shared/helpers';
 
 @Controller('auth')

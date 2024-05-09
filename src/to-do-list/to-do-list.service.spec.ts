@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { plainToClass } from 'class-transformer';
+
 import { ToDoListService } from './to-do-list.service';
 import { AppModule } from '../app.module';
-import { plainToClass } from 'class-transformer';
 import { ToDoList } from '../shared/database/entities/to-do-list.entity';
 
 describe('ToDoListService', () => {
@@ -33,7 +34,7 @@ describe('ToDoListService', () => {
   });
 
   it('should get all todo lists', async () => {
-    const todo = await service.findAll({});
+    const todo = await service.findAll({ page: 1, limit: 3 });
 
     expect(todo).toBeDefined();
     expect(todo.length).toBeGreaterThan(0);

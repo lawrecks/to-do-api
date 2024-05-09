@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-
-import { ToDoListModule } from './to-do-list/to-do-list.module';
-import { DatabaseModule } from './shared/database/database.module';
 import { ConfigModule } from '@nestjs/config';
-import { UserModule } from './user/user.module';
-import { TaskModule } from './task/task.module';
-import databaseConfig from './shared/config/database.config';
+
 import appConfig from './shared/config/app.config';
+import databaseConfig from './shared/config/database.config';
+import { DatabaseModule } from './shared/database/database.module';
+import { TaskModule } from './task/task.module';
+import { ToDoListModule } from './to-do-list/to-do-list.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [

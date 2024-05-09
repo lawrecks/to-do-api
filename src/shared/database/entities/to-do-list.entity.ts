@@ -1,5 +1,3 @@
-import { Base } from './base';
-import { User } from './user.entity';
 import {
   BeforeInsert,
   Column,
@@ -8,7 +6,10 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
+
+import { Base } from './base';
 import { Task } from './task.entity';
+import { User } from './user.entity';
 
 @Entity('to_do_lists')
 export class ToDoList extends Base {

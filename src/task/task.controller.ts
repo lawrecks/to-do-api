@@ -10,15 +10,16 @@ import {
   UseGuards,
   HttpStatus,
 } from '@nestjs/common';
-import { TaskService } from './task.service';
-import { CreateTaskDto } from './dto/create-task.dto';
-import { UpdateTaskDto } from './dto/update-task.dto';
-import { Task } from '../shared/database/entities/task.entity';
 import { plainToClass } from 'class-transformer';
-import { stripKeys, successResponse } from '../shared/helpers';
-import { UserAuthGuard } from '../user/auth/user.guard';
-import { ToDoListService } from '../to-do-list/to-do-list.service';
+
+import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskQueryDto } from './dto/task-query.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
+import { TaskService } from './task.service';
+import { Task } from '../shared/database/entities/task.entity';
+import { stripKeys, successResponse } from '../shared/helpers';
+import { ToDoListService } from '../to-do-list/to-do-list.service';
+import { UserAuthGuard } from '../user/auth/user.guard';
 
 @UseGuards(UserAuthGuard)
 @Controller('task')
@@ -46,13 +47,15 @@ export class TaskController {
 
   @Get()
   async findAll(@Query() query: TaskQueryDto) {
-    const { toDoListId } = query;
+    const { toDoListId, page = 1, limit = 10 } = query;
     await this.toDoListService.getOne(toDoListId);
-    const [data, count] = await this.service.findAll(toDoListId, query);
+    const [data, total] = await this.service.findAll({ ...query, page, limit });
 
     return successResponse(HttpStatus.OK, 'Tasks fetched successfully', {
       tasks: stripKeys(data, ['deletedAt']),
-      count,
+      total,
+      page: +page,
+      limit: +limit,
     });
   }
 
@@ -84,6 +87,7 @@ export class TaskController {
   async remove(@Param('id') id: number) {
     await this.service.getOne(id);
     await this.service.remove(id);
+
     return successResponse(HttpStatus.OK, 'Task deleted successfully');
   }
 }
