@@ -25,7 +25,7 @@ export class UserController {
 
     const newUser = await this.service.create(data);
 
-    return successResponse(201, stripKeys(newUser, ['password']));
+    return successResponse(201, stripKeys(newUser, ['password', 'deletedAt']));
   }
 
   @Post('/login')

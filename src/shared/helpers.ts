@@ -11,10 +11,10 @@ export const stripKeys = (
   return data;
 };
 
-export const successResponse = (code: number, data = {}) => {
+export const successResponse = (statusCode: number, data = {}) => {
   return {
-    status: 'success',
-    code,
+    success: true,
+    statusCode,
     data,
   };
 };

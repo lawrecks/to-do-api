@@ -25,7 +25,12 @@ export class UserService {
   }
 
   async findOneByEmail(email: string) {
-    return this.repository.findOne({ where: { email } });
+    return this.repository.findOne({
+      where: { email },
+      relations: {
+        toDoLists: true,
+      },
+    });
   }
 
   async login({ email, password }: LoginUserDto) {
@@ -51,7 +56,7 @@ export class UserService {
 
     return {
       accessToken,
-      user: stripKeys(user, ['password']),
+      user: stripKeys(user, ['password', 'deletedAt']),
     };
   }
 }
