@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateToDoDtoList } from './dto/update-to-do-list.dto';
-import { ToDoList } from 'src/shared/database/entities/to-do-list.entity';
+import { ToDoList } from '../shared/database/entities/to-do-list.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PaginationOptions } from 'src/shared/pagination-options';
+import { PaginationOptions } from '../shared/pagination-options';
 
 @Injectable()
 export class ToDoListService {

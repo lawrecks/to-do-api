@@ -7,9 +7,9 @@ import {
 import { UserService } from './user.service';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { plainToClass } from 'class-transformer';
-import { User } from 'src/shared/database/entities/user.entity';
+import { User } from '../shared/database/entities/user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
-import { stripKeys, successResponse } from 'src/shared/helpers';
+import { stripKeys, successResponse } from '../shared/helpers';
 
 @Controller('auth')
 export class UserController {

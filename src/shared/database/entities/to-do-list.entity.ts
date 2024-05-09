@@ -1,5 +1,5 @@
-import { Base } from 'src/shared/database/entities/base';
-import { User } from 'src/shared/database/entities/user.entity';
+import { Base } from './base';
+import { User } from './user.entity';
 import {
   BeforeInsert,
   Column,

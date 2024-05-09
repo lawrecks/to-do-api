@@ -1,8 +1,8 @@
 import { BeforeInsert, Column, Entity, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
-import { Base } from 'src/shared/database/entities/base';
-import { ToDoList } from 'src/shared/database/entities/to-do-list.entity';
+import { Base } from './base';
+import { ToDoList } from './to-do-list.entity';
 
 @Entity({ name: 'users' })
 export class User extends Base {
