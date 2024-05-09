@@ -1,7 +1,8 @@
-import { TaskStatusEnum } from '../../constants';
-import { Base } from './base';
 import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+
+import { Base } from './base';
 import { ToDoList } from './to-do-list.entity';
+import { TaskStatusEnum } from '../../constants';
 
 @Entity({ name: 'tasks' })
 export class Task extends Base {

@@ -1,5 +1,5 @@
-import { BeforeInsert, Column, Entity, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { BeforeInsert, Column, Entity, OneToMany } from 'typeorm';
 
 import { Base } from './base';
 import { ToDoList } from './to-do-list.entity';

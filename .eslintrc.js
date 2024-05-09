@@ -17,9 +17,22 @@ module.exports = {
   },
   ignorePatterns: ['.eslintrc.js'],
   rules: {
+    'no-var': 'error',
+    'no-console': 'error',
+    'no-multi-spaces': 'error',
+    'no-undef': 'off',
+    'no-multiple-empty-lines': ['error', { max: 1, maxBOF: 0, maxEOF: 1 }],
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      { varsIgnorePattern: '^_', args: 'none' },
+    ],
+    'no-duplicate-imports': 'error',
+    'object-shorthand': ['error'],
+    'newline-before-return': ['error'],
   },
 };

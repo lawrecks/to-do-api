@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
-import { UserService } from './user.service';
-import { UserController } from './user.controller';
-import { DatabaseModule } from '../shared/database/database.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../shared/database/entities/user.entity';
-import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { UserStrategy } from './auth/user.strategy';
+import { UserController } from './user.controller';
+import { UserService } from './user.service';
+import { DatabaseModule } from '../shared/database/database.module';
+import { User } from '../shared/database/entities/user.entity';
 
 @Module({
   imports: [

@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { plainToClass } from 'class-transformer';
+
 import { ToDoListService } from './to-do-list.service';
 import { AppModule } from '../app.module';
-import { plainToClass } from 'class-transformer';
 import { ToDoList } from '../shared/database/entities/to-do-list.entity';
 
 describe('ToDoListService', () => {

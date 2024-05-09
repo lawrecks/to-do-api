@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { plainToClass } from 'class-transformer';
+
 import { UserService } from './user.service';
 import { AppModule } from '../app.module';
-import { plainToClass } from 'class-transformer';
 import { User } from '../shared/database/entities/user.entity';
 
 describe('UserService', () => {

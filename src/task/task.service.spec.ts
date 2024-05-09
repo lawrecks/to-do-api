@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { plainToClass } from 'class-transformer';
+
 import { TaskService } from './task.service';
 import { AppModule } from '../app.module';
 import { Task } from '../shared/database/entities/task.entity';
-import { plainToClass } from 'class-transformer';
 
 describe('TaskService', () => {
   let service: TaskService;

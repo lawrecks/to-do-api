@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { UpdateToDoDtoList } from './dto/update-to-do-list.dto';
-import { ToDoList } from '../shared/database/entities/to-do-list.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, Raw, Repository } from 'typeorm';
+
+import { UpdateToDoDtoList } from './dto/update-to-do-list.dto';
+import { ToDoList } from '../shared/database/entities/to-do-list.entity';
 import { PaginationOptions } from '../shared/pagination-options';
 
 @Injectable()
@@ -36,8 +37,6 @@ export class ToDoListService {
         },
       };
     }
-
-    console.log('options :>> ', options);
 
     return this.repository.findAndCount(options);
   }
