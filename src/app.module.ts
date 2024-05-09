@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { ToDoModule } from './to-do-list/to-do-list.module';
+import { ToDoListModule } from './to-do-list/to-do-list.module';
 import { DatabaseModule } from './shared/database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
@@ -14,7 +14,7 @@ import appConfig from './shared/config/app.config';
       load: [appConfig, databaseConfig],
     }),
     DatabaseModule,
-    ToDoModule,
+    ToDoListModule,
     UserModule,
   ],
   controllers: [],

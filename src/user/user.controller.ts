@@ -25,13 +25,17 @@ export class UserController {
 
     const newUser = await this.service.create(data);
 
-    return successResponse(201, stripKeys(newUser, ['password', 'deletedAt']));
+    return successResponse(
+      201,
+      'Registration successful',
+      stripKeys(newUser, ['deletedAt']),
+    );
   }
 
   @Post('/login')
   async login(@Body() dto: LoginUserDto) {
     const data = await this.service.login(dto);
 
-    return successResponse(200, data);
+    return successResponse(200, 'Login successful', data);
   }
 }
