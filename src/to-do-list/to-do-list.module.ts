@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ToDoService } from './to-do-list.service';
-import { ToDoController } from './to-do-list.controller';
+import { ToDoListService } from './to-do-list.service';
+import { ToDoListController } from './to-do-list.controller';
+import { DatabaseModule } from 'src/shared/database/database.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ToDoList } from 'src/shared/database/entities/to-do-list.entity';
 
 @Module({
-  controllers: [ToDoController],
-  providers: [ToDoService],
+  imports: [DatabaseModule, TypeOrmModule.forFeature([ToDoList])],
+  controllers: [ToDoListController],
+  providers: [ToDoListService],
 })
-export class ToDoModule {}
+export class ToDoListModule {}

@@ -1,26 +1,51 @@
-import { Injectable } from '@nestjs/common';
-import { CreateToDoDto } from './dto/create-to-do-list.dto';
-import { UpdateToDoDto } from './dto/update-to-do-list.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { UpdateToDoDtoList } from './dto/update-to-do-list.dto';
+import { ToDoList } from 'src/shared/database/entities/to-do-list.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { PaginationOptions } from 'src/shared/pagination-options';
 
 @Injectable()
-export class ToDoService {
-  create(createToDoDto: CreateToDoDto) {
-    return 'This action adds a new toDo';
+export class ToDoListService {
+  constructor(
+    @InjectRepository(ToDoList)
+    private readonly repository: Repository<ToDoList>,
+  ) {}
+  async create(toDoList: ToDoList) {
+    return this.repository.save(toDoList);
   }
 
-  findAll() {
-    return `This action returns all toDo`;
+  async findAll({ page = 1, limit = 10 }: PaginationOptions) {
+    const skip = (page - 1) * limit;
+
+    return this.repository.findAndCount({
+      take: limit,
+      skip,
+      relations: { tasks: true },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} toDo`;
+  async findOne(id: number) {
+    return this.repository.findOne({
+      where: { id },
+      relations: { tasks: true },
+    });
   }
 
-  update(id: number, updateToDoDto: UpdateToDoDto) {
-    return `This action updates a #${id} toDo`;
+  async update(id: number, dto: UpdateToDoDtoList) {
+    return this.repository.update({ id }, dto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} toDo`;
+  async remove(id: number) {
+    return this.repository.softDelete(id);
+  }
+
+  async getOne(id: number) {
+    const toDoList = await this.findOne(id);
+    if (!toDoList) {
+      throw new NotFoundException('To-do list not found');
+    }
+
+    return toDoList;
   }
 }

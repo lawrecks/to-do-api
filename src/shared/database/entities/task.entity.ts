@@ -8,7 +8,11 @@ export class Task extends Base {
   @Column({ length: 200 })
   description: string;
 
-  @Column({ type: 'enum', enum: TaskStatusEnum })
+  @Column({
+    type: 'enum',
+    enum: TaskStatusEnum,
+    default: TaskStatusEnum.PENDING,
+  })
   status: TaskStatusEnum;
 
   @Column({ name: 'due_date', type: 'timestamp' })

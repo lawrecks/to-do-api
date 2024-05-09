@@ -6,37 +6,80 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
+  Req,
+  UseGuards,
+  HttpStatus,
 } from '@nestjs/common';
-import { ToDoService } from './to-do-list.service';
-import { CreateToDoDto } from './dto/create-to-do-list.dto';
-import { UpdateToDoDto } from './dto/update-to-do-list.dto';
+import { ToDoListService } from './to-do-list.service';
+import { CreateToDoListDto } from './dto/create-to-do-list.dto';
+import { UpdateToDoDtoList } from './dto/update-to-do-list.dto';
+import { plainToClass } from 'class-transformer';
+import { ToDoList } from 'src/shared/database/entities/to-do-list.entity';
+import { stripKeys, successResponse } from 'src/shared/helpers';
+import { PaginationOptions } from 'src/shared/pagination-options';
+import { Request } from 'express';
+import { User } from 'src/shared/database/entities/user.entity';
+import { UserAuthGuard } from 'src/user/auth/user.guard';
 
-@Controller('to-do')
-export class ToDoController {
-  constructor(private readonly toDoService: ToDoService) {}
+@UseGuards(UserAuthGuard)
+@Controller('to-do-list')
+export class ToDoListController {
+  constructor(private readonly service: ToDoListService) {}
 
   @Post()
-  create(@Body() createToDoDto: CreateToDoDto) {
-    return this.toDoService.create(createToDoDto);
+  async create(@Req() req: Request, @Body() dto: CreateToDoListDto) {
+    const user = req.user as User;
+    const data: ToDoList = plainToClass(ToDoList, {
+      name: dto.name,
+      user,
+    });
+    const toDoList = await this.service.create(data);
+
+    return successResponse(
+      HttpStatus.CREATED,
+      'To-do list created successfully',
+      stripKeys(toDoList, ['deletedAt']),
+    );
   }
 
   @Get()
-  findAll() {
-    return this.toDoService.findAll();
+  async findAll(@Query() query: PaginationOptions) {
+    const [data, count] = await this.service.findAll(query);
+
+    return successResponse(HttpStatus.OK, 'To-do lists fetched successfully', {
+      toDoLists: stripKeys(data, ['deletedAt']),
+      count,
+    });
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.toDoService.findOne(+id);
+  async findOne(@Param('id') id: number) {
+    const toDoList = await this.service.getOne(id);
+
+    return successResponse(
+      HttpStatus.OK,
+      'To-do list fetched successfully',
+      stripKeys(toDoList, ['deletedAt']),
+    );
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateToDoDto: UpdateToDoDto) {
-    return this.toDoService.update(+id, updateToDoDto);
+  async update(@Param('id') id: number, @Body() dto: UpdateToDoDtoList) {
+    await this.service.getOne(id);
+    await this.service.update(+id, dto);
+    const updatedData = await this.service.findOne(id);
+    return successResponse(
+      HttpStatus.OK,
+      'To-do list updated successfully',
+      stripKeys(updatedData, ['deletedAt']),
+    );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.toDoService.remove(+id);
+  async remove(@Param('id') id: number) {
+    await this.service.getOne(id);
+    await this.service.remove(id);
+    return successResponse(HttpStatus.OK, 'To-do list deleted successfully');
   }
 }

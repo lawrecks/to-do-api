@@ -20,10 +20,6 @@ export class UserService {
     return this.repository.save(user);
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
-
   async findOneByEmail(email: string) {
     return this.repository.findOne({
       where: { email },
