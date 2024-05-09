@@ -9,6 +9,7 @@ import {
   Query,
   Req,
   UseGuards,
+  HttpStatus,
 } from '@nestjs/common';
 import { ToDoListService } from './to-do-list.service';
 import { CreateToDoListDto } from './dto/create-to-do-list.dto';
@@ -16,7 +17,7 @@ import { UpdateToDoDtoList } from './dto/update-to-do-list.dto';
 import { plainToClass } from 'class-transformer';
 import { ToDoList } from 'src/shared/database/entities/to-do-list.entity';
 import { stripKeys, successResponse } from 'src/shared/helpers';
-import { PaginationOptions } from 'src/shared/interface/pagination.interface';
+import { PaginationOptions } from 'src/shared/pagination-options';
 import { Request } from 'express';
 import { User } from 'src/shared/database/entities/user.entity';
 import { UserAuthGuard } from 'src/user/auth/user.guard';
@@ -36,9 +37,9 @@ export class ToDoListController {
     const toDoList = await this.service.create(data);
 
     return successResponse(
-      201,
+      HttpStatus.CREATED,
       'To-do list created successfully',
-      stripKeys(toDoList, ['deleted_at']),
+      stripKeys(toDoList, ['deletedAt']),
     );
   }
 
@@ -46,8 +47,8 @@ export class ToDoListController {
   async findAll(@Query() query: PaginationOptions) {
     const [data, count] = await this.service.findAll(query);
 
-    return successResponse(200, 'To-do lists fetched successfully', {
-      toDoLists: stripKeys(data, ['deleted_at']),
+    return successResponse(HttpStatus.OK, 'To-do lists fetched successfully', {
+      toDoLists: stripKeys(data, ['deletedAt']),
       count,
     });
   }
@@ -57,28 +58,28 @@ export class ToDoListController {
     const toDoList = await this.service.getOne(id);
 
     return successResponse(
-      200,
+      HttpStatus.OK,
       'To-do list fetched successfully',
-      stripKeys(toDoList, ['deleted_at']),
+      stripKeys(toDoList, ['deletedAt']),
     );
   }
 
   @Patch(':id')
   async update(@Param('id') id: number, @Body() dto: UpdateToDoDtoList) {
     await this.service.getOne(id);
-    const updatedData = await this.service.update(+id, dto);
-
+    await this.service.update(+id, dto);
+    const updatedData = await this.service.findOne(id);
     return successResponse(
-      200,
+      HttpStatus.OK,
       'To-do list updated successfully',
-      stripKeys(updatedData, ['deleted_at']),
+      stripKeys(updatedData, ['deletedAt']),
     );
   }
 
   @Delete(':id')
   async remove(@Param('id') id: number) {
     await this.service.getOne(id);
-    await this.service.remove(+id);
-    return successResponse(201, 'To-do list deleted successfully');
+    await this.service.remove(id);
+    return successResponse(HttpStatus.OK, 'To-do list deleted successfully');
   }
 }

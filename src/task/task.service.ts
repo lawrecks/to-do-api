@@ -3,7 +3,7 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from 'src/shared/database/entities/task.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PaginationOptions } from 'src/shared/interface/pagination.interface';
+import { PaginationOptions } from 'src/shared/pagination-options';
 
 @Injectable()
 export class TaskService {
@@ -36,7 +36,7 @@ export class TaskService {
   }
 
   async update(id: number, dto: UpdateTaskDto) {
-    return this.repository.save({ id, ...dto });
+    return this.repository.update({ id }, dto);
   }
 
   async remove(id: number) {

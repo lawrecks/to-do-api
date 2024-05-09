@@ -3,7 +3,7 @@ import { UpdateToDoDtoList } from './dto/update-to-do-list.dto';
 import { ToDoList } from 'src/shared/database/entities/to-do-list.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PaginationOptions } from 'src/shared/interface/pagination.interface';
+import { PaginationOptions } from 'src/shared/pagination-options';
 
 @Injectable()
 export class ToDoListService {
@@ -33,7 +33,7 @@ export class ToDoListService {
   }
 
   async update(id: number, dto: UpdateToDoDtoList) {
-    return this.repository.save({ id, ...dto });
+    return this.repository.update({ id }, dto);
   }
 
   async remove(id: number) {
