@@ -15,12 +15,12 @@ import { ToDoListService } from './to-do-list.service';
 import { CreateToDoListDto } from './dto/create-to-do-list.dto';
 import { UpdateToDoDtoList } from './dto/update-to-do-list.dto';
 import { plainToClass } from 'class-transformer';
-import { ToDoList } from 'src/shared/database/entities/to-do-list.entity';
-import { stripKeys, successResponse } from 'src/shared/helpers';
-import { PaginationOptions } from 'src/shared/pagination-options';
+import { ToDoList } from '../shared/database/entities/to-do-list.entity';
+import { stripKeys, successResponse } from '../shared/helpers';
+import { PaginationOptions } from '../shared/pagination-options';
 import { Request } from 'express';
-import { User } from 'src/shared/database/entities/user.entity';
-import { UserAuthGuard } from 'src/user/auth/user.guard';
+import { User } from '../shared/database/entities/user.entity';
+import { UserAuthGuard } from '../user/auth/user.guard';
 
 @UseGuards(UserAuthGuard)
 @Controller('to-do-list')

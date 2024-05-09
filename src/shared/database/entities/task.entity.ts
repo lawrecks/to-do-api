@@ -1,5 +1,5 @@
-import { TaskStatusEnum } from 'src/shared/constants';
-import { Base } from 'src/shared/database/entities/base';
+import { TaskStatusEnum } from '../../constants';
+import { Base } from './base';
 import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { ToDoList } from './to-do-list.entity';
 

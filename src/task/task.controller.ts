@@ -13,11 +13,11 @@ import {
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { Task } from 'src/shared/database/entities/task.entity';
+import { Task } from '../shared/database/entities/task.entity';
 import { plainToClass } from 'class-transformer';
-import { stripKeys, successResponse } from 'src/shared/helpers';
-import { UserAuthGuard } from 'src/user/auth/user.guard';
-import { ToDoListService } from 'src/to-do-list/to-do-list.service';
+import { stripKeys, successResponse } from '../shared/helpers';
+import { UserAuthGuard } from '../user/auth/user.guard';
+import { ToDoListService } from '../to-do-list/to-do-list.service';
 import { TaskQueryDto } from './dto/task-query.dto';
 
 @UseGuards(UserAuthGuard)

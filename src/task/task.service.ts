@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { Task } from 'src/shared/database/entities/task.entity';
+import { Task } from '../shared/database/entities/task.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PaginationOptions } from 'src/shared/pagination-options';
+import { PaginationOptions } from '../shared/pagination-options';
 
 @Injectable()
 export class TaskService {
