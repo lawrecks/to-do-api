@@ -1,5 +1,4 @@
-# orders-service
-
+# to-do-api
 RESTful API for a simple To-Do List application
 
 ---
